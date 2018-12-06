@@ -26,10 +26,16 @@ class PublicController extends DietaryController {
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 		// set a warning variable to false be default
 		$warning = false;
+		$zoom = false;
 
 		// check if this is being displayed with a GoogleTV
 		if (strpos($ua, "GoogleTV") && strpos($ua, "i686")) {
 			$warning = true;
+		}
+		
+		// check if this is being displayed with a Tizen Display
+		if (strpos($ua, "SMART-TV; Linux; Tizen") !== false) {
+			$zoom= true;
 		}
 
 		// get the location
@@ -92,6 +98,7 @@ class PublicController extends DietaryController {
 
 		smarty()->assign('menu', $menu);
 		smarty()->assign('warning', $warning);
+		smarty()->assign('warning', $zoom);
 		smarty()->assign('meal', $meal);
 		smarty()->assignByRef('menuItems', $menuItems);
 		smarty()->assignByRef("alternates", $alternates);
